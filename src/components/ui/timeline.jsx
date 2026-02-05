@@ -33,7 +33,7 @@ export const Timeline = ({ data }) => {
                     Event Timeline
                 </h2>
                 <p className="text-neutral-300 text-sm md:text-base max-w-sm mx-auto text-center">
-                    Follow the schedule for VIDBHAV 2025 throughout the 24-hour hackathon.
+                    Follow the schedule for UDBHAV 2025 throughout the 24-hour hackathon.
                 </p>
             </div>
 
@@ -50,14 +50,14 @@ export const Timeline = ({ data }) => {
                             height: heightTransform,
                             opacity: opacityTransform,
                         }}
-                        className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
+                        className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-teal-500 via-cyan-500 to-transparent from-[0%] via-[10%] rounded-full"
                     />
                 </div>
 
                 {data.map((item, index) => (
                     <div
                         key={index}
-                        className="flex justify-between items-center w-full pt-8 md:pt-12 md:gap-10"
+                        className="flex justify-between items-center w-full pt-8 md:pt-12 md:gap-4"
                     >
                         {/* Time/Title Side - Alternates */}
                         {/* 
@@ -78,7 +78,7 @@ export const Timeline = ({ data }) => {
                         */}
 
                         {/* Left Side (Empty for Even, Content for Odd) */}
-                        <div className="hidden md:block w-5/12">
+                        <div className="hidden md:flex w-5/12 justify-end">
                             {index % 2 !== 0 && (
                                 <motion.div
                                     initial={{ opacity: 0, x: -50 }}
@@ -88,11 +88,12 @@ export const Timeline = ({ data }) => {
                                 >
                                     <HoverBorderGradient
                                         as="div"
-                                        containerClassName="rounded-xl w-full"
-                                        className="min-h-[150px] bg-gray-900/40 backdrop-blur-md flex flex-col items-end text-right p-6 w-full h-full justify-center"
+                                        containerClassName="rounded-xl w-full max-w-xl"
+                                        className="bg-slate-900/40 backdrop-blur-md flex flex-col items-end text-right h-44 w-full justify-center px-6"
                                     >
-                                        <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                                        <div className="text-neutral-300">{item.content}</div>
+                                        <p className="text-teal-400 text-xs font-semibold mb-1 uppercase tracking-wider">{item.date}</p>
+                                        <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                                        <div className="text-neutral-400 text-sm">{item.content}</div>
                                     </HoverBorderGradient>
                                 </motion.div>
                             )}
@@ -100,23 +101,23 @@ export const Timeline = ({ data }) => {
 
                         {/* Center Point & Connectors */}
                         <div className="relative z-10 flex items-center justify-center w-8 h-8 left-4 md:left-0">
-                            <div className="w-8 h-8 rounded-full bg-neutral-800 border-2 border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.5)] z-20 flex items-center justify-center">
-                                <div className="w-2 h-2 rounded-full bg-orange-500" />
+                            <div className="w-8 h-8 rounded-full bg-slate-800 border-2 border-teal-500 shadow-[0_0_15px_rgba(20,184,166,0.5)] z-20 flex items-center justify-center">
+                                <div className="w-2 h-2 rounded-full bg-teal-500" />
                             </div>
                             {/* Connector Line for Desktop - Right (Even Index) */}
                             {index % 2 === 0 && (
-                                <div className="hidden md:block absolute left-full top-1/2 -translate-y-1/2 w-16 h-[2px] bg-gradient-to-r from-orange-500 to-transparent" />
+                                <div className="hidden md:block absolute left-full top-1/2 -translate-y-1/2 w-16 h-[2px] bg-gradient-to-r from-teal-500 to-transparent" />
                             )}
                             {/* Connector Line for Desktop - Left (Odd Index) */}
                             {index % 2 !== 0 && (
-                                <div className="hidden md:block absolute right-full top-1/2 -translate-y-1/2 w-16 h-[2px] bg-gradient-to-l from-orange-500 to-transparent" />
+                                <div className="hidden md:block absolute right-full top-1/2 -translate-y-1/2 w-16 h-[2px] bg-gradient-to-l from-teal-500 to-transparent" />
                             )}
                             {/* Connector Line for Mobile - Always Right */}
-                            <div className="md:hidden absolute left-full top-1/2 -translate-y-1/2 w-12 h-[2px] bg-gradient-to-r from-orange-500 to-transparent" />
+                            <div className="md:hidden absolute left-full top-1/2 -translate-y-1/2 w-12 h-[2px] bg-gradient-to-r from-teal-500 to-transparent" />
                         </div>
 
                         {/* Right Side (Content for Even, Empty for Odd) */}
-                        <div className="w-full pl-16 md:pl-0 md:w-5/12">
+                        <div className="w-full pl-16 md:pl-0 md:w-5/12 md:flex md:justify-start">
                             {index % 2 === 0 ? (
                                 <motion.div
                                     initial={{ opacity: 0, x: 50 }}
@@ -126,11 +127,12 @@ export const Timeline = ({ data }) => {
                                 >
                                     <HoverBorderGradient
                                         as="div"
-                                        containerClassName="rounded-xl w-full"
-                                        className="min-h-[150px] bg-gray-900/40 backdrop-blur-md flex flex-col items-start text-left p-6 w-full h-full justify-center"
+                                        containerClassName="rounded-xl w-full max-w-xl"
+                                        className="bg-slate-900/40 backdrop-blur-md flex flex-col items-start text-left h-44 w-full justify-center px-6"
                                     >
-                                        <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                                        <div className="text-neutral-300">{item.content}</div>
+                                        <p className="text-teal-400 text-xs font-semibold mb-1 uppercase tracking-wider">{item.date}</p>
+                                        <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                                        <div className="text-neutral-400 text-sm">{item.content}</div>
                                     </HoverBorderGradient>
                                 </motion.div>
                             ) : (
@@ -142,11 +144,12 @@ export const Timeline = ({ data }) => {
                                 >
                                     <HoverBorderGradient
                                         as="div"
-                                        containerClassName="rounded-xl w-full md:hidden"
-                                        className="min-h-[150px] bg-gray-900/40 backdrop-blur-md flex flex-col items-start text-left p-6 w-full h-full justify-center"
+                                        containerClassName="rounded-xl w-full max-w-xl md:hidden"
+                                        className="bg-slate-900/40 backdrop-blur-md flex flex-col items-start text-left h-44 w-full justify-center px-6"
                                     >
-                                        <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                                        <div className="text-neutral-300">{item.content}</div>
+                                        <p className="text-teal-400 text-xs font-semibold mb-1 uppercase tracking-wider">{item.date}</p>
+                                        <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                                        <div className="text-neutral-400 text-sm">{item.content}</div>
                                     </HoverBorderGradient>
                                 </motion.div>
                             )}

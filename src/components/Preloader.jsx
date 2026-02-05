@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Preloader = ({ onComplete }) => {
-    const text = "UDHBAV";
+    const text = "UDBHAV";
     const bootLines = [
         { label: "SYSTEM CHECK", status: "OK" },
         { label: "LINKING MODULES", status: "OK" },
@@ -88,7 +88,7 @@ const Preloader = ({ onComplete }) => {
                     {text.split("").map((char, index) => (
                         <span
                             key={`${char}-${index}`}
-                            className="glitch-text glitch-letter flicker text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-teal-300"
+                            className="glitch-text glitch-letter flicker text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-200"
                             data-text={char}
                             style={{
                                 '--glitch-delay': `${index * 0.08}s`,
@@ -112,9 +112,9 @@ const Preloader = ({ onComplete }) => {
                             variants={bootLine}
                             className="boot-line"
                         >
-                            <span className="text-teal-200/90">{line.label}</span>
-                            <span className="text-teal-400/90"> ... </span>
-                            <span className="text-teal-300">{line.status}</span>
+                            <span className="text-white/80">{line.label}</span>
+                            <span className="text-white/50"> ... </span>
+                            <span className="text-white/75">{line.status}</span>
                             {line.cursor ? <span className="boot-caret">|</span> : null}
                         </motion.li>
                     ))}

@@ -2,7 +2,7 @@
 
 @import "tailwindcss";
 
-/* Udhbav-2k25 Hackathon Design System - Turquoise Cyberpunk Theme */
+/* Udbhav-2k25 Hackathon Design System - Turquoise Cyberpunk Theme */
 
 :root {
   /* Dark base with turquoise accents */
@@ -69,6 +69,13 @@ h6 {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
 }
 
 /* Prevent section overlap */
@@ -442,10 +449,10 @@ section {
 .glitch-text {
   position: relative;
   display: inline-block;
-  color: var(--color-foreground);
+  color: #f8fafc;
   text-shadow:
-    0 0 12px rgba(20, 184, 166, 0.6),
-    0 0 24px rgba(6, 182, 212, 0.35);
+    0 0 8px rgba(255, 255, 255, 0.45),
+    0 0 14px rgba(148, 163, 184, 0.25);
 }
 
 .glitch-text::before,
@@ -460,7 +467,7 @@ section {
 }
 
 .glitch-text::before {
-  color: var(--color-accent);
+  color: #e2e8f0;
   opacity: 0.35;
   transform: translate(1px, 0);
   clip-path: inset(0 0 60% 0);
@@ -469,7 +476,7 @@ section {
 }
 
 .glitch-text::after {
-  color: var(--color-primary);
+  color: #cbd5f5;
   opacity: 0.25;
   transform: translate(-1px, 0);
   clip-path: inset(40% 0 0 0);
@@ -526,14 +533,15 @@ section {
   font-size: 0.75rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(224, 255, 255, 0.7);
-  text-shadow: 0 0 8px rgba(20, 184, 166, 0.35);
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.28);
 }
 
 .boot-caret {
   display: inline-block;
   margin-left: 0.5ch;
-  color: var(--color-accent);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
   animation: caretBlink 1s steps(2, start) infinite;
 }
 

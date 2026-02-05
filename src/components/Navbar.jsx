@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const registrationUrl = "/registration";
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,7 +25,7 @@ const Navbar = () => {
     ];
 
     const handleRegistration = () => {
-        window.location.href = registrationUrl;
+        navigate(registrationUrl);
     };
 
     return (
@@ -41,7 +43,7 @@ const Navbar = () => {
                     <div className="flex items-center justify-between h-16 md:h-20">
                         {/* Logo */}
                         <a href="#" className="font-display text-xl md:text-2xl font-bold gradient-text">
-                            UDHBAV 2K26
+                            UDBHAV 2K26
                         </a>
 
                         {/* Desktop Nav */}
@@ -50,7 +52,7 @@ const Navbar = () => {
                                 <a
                                     key={link.label}
                                     href={link.href}
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium"
+                                    className="relative text-sm md:text-base font-semibold text-white/80 hover:text-teal-300 tracking-wide transition-colors drop-shadow-[0_0_10px_rgba(20,184,166,0.35)] after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-gradient-to-r after:from-teal-400 after:via-cyan-400 after:to-teal-300 after:transition-transform after:duration-300 hover:after:scale-x-100"
                                 >
                                     {link.label}
                                 </a>
@@ -95,7 +97,7 @@ const Navbar = () => {
                                     <a
                                         key={link.label}
                                         href={link.href}
-                                        className="text-lg text-foreground py-3 border-b border-border/30"
+                                        className="text-lg text-white/90 font-semibold py-3 border-b border-teal-500/20 tracking-wide"
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >
                                         {link.label}

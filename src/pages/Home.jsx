@@ -131,7 +131,7 @@ export default function Home() {
   };
 
   const handleRegistration = () => {
-    window.location.href = registrationUrl;
+    navigate(registrationUrl);
   };
 
   return (
@@ -177,7 +177,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent">UDHBAV</span>
+              <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent">UDBHAV</span>
               <br />
               <span className="text-white">2K26</span>
             </motion.h1>
@@ -277,10 +277,10 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-               <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent">About Udhbav</span>
+               <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent">About Udbhav</span>
             </h2>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto mt-8">
-              Udhbav 2K25 is the flagship hackathon that brings together the brightest minds
+              Udbhav 2K25 is the flagship hackathon that brings together the brightest minds
               to solve real-world problems through technology. Join us for 24 hours of innovation,
               learning, and unforgettable experiences.
             </p>
@@ -461,7 +461,7 @@ export default function Home() {
       </section>
 
       {/*Timeline Section*/}
-      <section id="timeline" className="relative py-20 px-4 md:px-8 bg-transparent overflow-hidden">
+      <section id="timeline" className="relative py-20 px-4 md:px-8 bg-transparent">
         <Timeline
           data={[
             {
@@ -502,7 +502,7 @@ export default function Home() {
               Ready to build something unforgettable?
             </h3>
             <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto mb-8">
-              Join UDHBAV 2K26 for 24 hours of focused creation, rapid learning, and a community
+              Join UDBHAV 2K26 for 24 hours of focused creation, rapid learning, and a community
               that ships bold ideas. Your next breakthrough starts here.
             </p>
             <Button
@@ -528,7 +528,7 @@ export default function Home() {
                 <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
                   <Zap className="text-white" size={24} />
                 </div>
-                <span className="text-white font-bold text-xl">UDHBAV 2026</span>
+                <span className="text-white font-bold text-xl">UDBHAV 2026</span>
               </div>
               <p className="text-gray-400 text-sm">
                 Empowering innovation through collaborative problem-solving
@@ -549,11 +549,11 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-400">
                   <Mail size={16} />
-                  <span className="text-sm">info@udhbav.com</span>
+                  <span className="text-sm">udbhav2k26.csi@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-400">
                   <Phone size={16} />
-                  <span className="text-sm">+91 98765 43210</span>
+                  <span className="text-sm">+91 95537 08116</span>
                 </div>
               </div>
             </div>
@@ -561,7 +561,7 @@ export default function Home() {
 
           <div className="pt-8 border-t border-white/10 text-center">
             <p className="text-gray-400 text-sm">
-              © 2026 UDHBAV 2K26. All rights reserved.
+              © 2026 UDBHAV 2K26. All rights reserved.
             </p>
           </div>
         </div>

@@ -47,9 +47,13 @@ export default function RegistrationPage() {
         this.speedX = (Math.random() - 0.5) * 0.4;
         this.speedY = (Math.random() - 0.5) * 0.4;
         this.opacity = Math.random() * 0.5 + 0.3;
-        
-        // Updated to cyan/teal color scheme to match the theme
-        this.color = { r: 34, g: 211, b: 238 }; // Cyan (#22d3ee)
+
+        const leftSide = this.x < canvas.width / 2;
+        if (leftSide) {
+          this.color = { r: 80, g: 150, b: 255 }; // blue
+        } else {
+          this.color = { r: 220, g: 80, b: 200 }; // pink
+        }
       }
 
       update() {
@@ -167,28 +171,15 @@ export default function RegistrationPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Updated dark navy/teal background gradient */}
-      <div 
-        className="absolute top-0 left-0 w-full h-full"
-        style={{
-          background: 'linear-gradient(135deg, #0a1929 0%, #0f2234 25%, #132838 50%, #0e1f2d 75%, #0a1520 100%)'
-        }}
-      />
-      
-      {/* Particle canvas with cyan/teal particles */}
-      <canvas
-        ref={canvasRef}
-        className="absolute top-0 left-0 w-full h-full pointer-events-none"
-        style={{ mixBlendMode: 'screen' }}
-      />
-      
-      {/* Subtle radial gradient overlay */}
-      <div 
-        className="absolute top-0 left-0 w-full h-full pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, rgba(34, 211, 238, 0.05) 0%, transparent 70%)'
-        }}
-      />
+      <div className="fixed top-0 left-0 w-full h-full -z-10 animated-gradient-bg">
+        <canvas
+          ref={canvasRef}
+          className="absolute top-0 left-0 w-full h-full"
+          style={{ mixBlendMode: 'screen', opacity: 0.6 }}
+        />
+      </div>
+
+      <div className="absolute inset-0 bg-gradient-radial from-teal-500/5 via-transparent to-transparent pointer-events-none" />
       
       <div className="relative z-10 p-4 md:p-8">
         <div className="max-w-5xl mx-auto">
