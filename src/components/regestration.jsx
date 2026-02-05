@@ -407,7 +407,7 @@ export default function Registration({setform, onsubmit}) {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold mb-2 text-gray-700">
-                    Regestration Number <span className="text-red-500">*</span>
+                    Registration Number <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -607,7 +607,7 @@ export default function Registration({setform, onsubmit}) {
 
                   <div>
                   <label className="block text-sm font-semibold mb-2 text-gray-700">
-                    Regestration Number <span className="text-red-500">*</span>
+                    Registration Number <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
