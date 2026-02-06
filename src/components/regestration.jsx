@@ -411,7 +411,7 @@ export default function Registration({setform, onsubmit}) {
                   </label>
                   <input
                     type="text"
-                    placeholder="Regetsration Number"
+                    placeholder="Regitsration Number"
                     value={formData.teamLead.regnum}
                     onChange={(e) => updateTeamLead('regnum', e.target.value)}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#203a43] focus:outline-none transition-all duration-300 bg-gray-50 hover:bg-white"
