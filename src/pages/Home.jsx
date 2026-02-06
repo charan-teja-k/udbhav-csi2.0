@@ -465,22 +465,22 @@ export default function Home() {
         <Timeline
           data={[
             {
-              date: "FEB 5, 2025",
+              date: "FEB 5, 2026",
               title: "Registration Opens",
               content: "Start your hackathon journey with initial registration.",
             },
             {
-              date: "FEB 9-23, 2025",
+              date: "FEB 9-23, 2026",
               title: "Idea Submission",
               content: "Submit your problem statement ideas in the google form.",
             },
             {
-              date: "FEB 23-28, 2025",
+              date: "FEB 23-28, 2026",
               title: "Idea Presentation Deadline",
               content: "Present your Idea for initial screening.No Eliminations",
             },
             {
-              date: "MAR 5-6, 2025",
+              date: "MAR 5-6, 2026",
               title: "Hackathon",
               content: "24 hours of non-stop innovation, coding, and building.",
             },
