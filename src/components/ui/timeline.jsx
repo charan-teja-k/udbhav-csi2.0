@@ -33,7 +33,7 @@ export const Timeline = ({ data }) => {
                     Event Timeline
                 </h2>
                 <p className="text-neutral-300 text-sm md:text-base max-w-sm mx-auto text-center">
-                    Follow the schedule for UDBHAV 2025 throughout the 24-hour hackathon.
+                    Follow the schedule for UDBHAV 2026 throughout the 24-hour hackathon.
                 </p>
             </div>
 
