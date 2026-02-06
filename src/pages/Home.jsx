@@ -280,7 +280,7 @@ export default function Home() {
                <span className="bg-gradient-to-r from-teal-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent">About Udbhav</span>
             </h2>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto mt-8">
-              Udbhav 2K25 is the flagship hackathon that brings together the brightest minds
+              Udbhav 2K26 is the flagship hackathon that brings together the brightest minds
               to solve real-world problems through technology. Join us for 24 hours of innovation,
               learning, and unforgettable experiences.
             </p>
