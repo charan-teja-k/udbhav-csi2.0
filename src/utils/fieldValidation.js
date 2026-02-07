@@ -9,9 +9,7 @@ function fieldValidation(field, value) {
     case "mobile":
       return /^[6-9][0-9]{9}$/.test(trimmedValue);
 
-    case "regnum":
-      return /^2[2-6][a-zA-Z0-9]{8}$/.test(trimmedValue);
-
+    
     default:
       return false;
   }
