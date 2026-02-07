@@ -235,8 +235,8 @@ export default function Registration({setform, onsubmit}) {
 
   const totalMembers = formData.teamMembers.length + 1;
   const isPaymentEnabled = totalMembers >= 4 && totalMembers <= 6;
-  const isRegValid = fieldValidation("regnum", formData.teamLead.regnum);
-  const showRegValidation = formData.teamLead.regnum.length > 0;
+  
+  
 
   return (
     <div className="w-full">
@@ -402,8 +402,8 @@ export default function Registration({setform, onsubmit}) {
                     <input
                       type="text"
                       required
-                      pattern='2[2-6][a-zA-Z0-9]{8}'
-                      maxLength={10}
+                      
+                      
                       placeholder="Registration Number"
                       value={formData.teamLead.regnum}
                       onChange={(e) => updateTeamLead('regnum', e.target.value)}
@@ -595,8 +595,8 @@ export default function Registration({setform, onsubmit}) {
                       <input
                         type="text"
                         required
-                        pattern='2[2-6][a-zA-Z0-9]{8}'
-                        maxLength={10}
+                        
+                        
                         placeholder="Registration Number"
                         value={member.regnum}
                         onChange={(e) => updateTeamMember(member.id,'regnum', e.target.value)}
