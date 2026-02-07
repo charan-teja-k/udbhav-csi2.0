@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Users, CheckCircle, Plus, MoveRight, MoveLeft, XCircle, Trash, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import fieldValidation from '../utils/fieldValidation';
+
 
 export default function Registration({setform, onsubmit}) {
   const navigate = useNavigate();
