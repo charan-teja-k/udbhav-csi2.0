@@ -3,6 +3,7 @@ import Homepage from './pages/Home';
 import Regestration from "./pages/RegestrationPage"
 import React, { useCallback, useState } from 'react'
 import ProblemStatement from './pages/ProblemStatement';
+import IdeaSubmission from './pages/IdeaSubmission';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Paymentpage from './pages/paymentpage';
 import AdminPage from './pages/AdminPage';
@@ -24,6 +25,7 @@ export default function App() {
       <Route element={<Homepage/>} path='/'/>
       <Route element={<Regestration/>} path='/registration'/>
       <Route element={<ProblemStatement/>} path='/statement'/>
+      <Route element={<IdeaSubmission/>} path='/idea-submission'/>
       <Route element={<Paymentpage/>}  path='/payment'/>
       <Route element={<AdminPage />} path="/admin-7842xk29" />
     </Routes>
