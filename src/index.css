@@ -260,16 +260,104 @@ section {
   position: relative;
   overflow: hidden;
   box-shadow:
-    0 0 20px rgba(20, 184, 166, 0.4),
-    0 0 40px rgba(20, 184, 166, 0.2);
+    0 0 10px rgba(20, 184, 166, 0.4),
+    0 0 20px rgba(20, 184, 166, 0.2);
   transition: all 0.3s ease;
 }
 
 .btn-glow:hover {
   box-shadow:
-    0 0 30px rgba(20, 184, 166, 0.6),
-    0 0 60px rgba(20, 184, 166, 0.4);
+    0 0 15px rgba(20, 184, 166, 0.6),
+    0 0 30px rgba(20, 184, 166, 0.4);
   transform: translateY(-2px);
+}
+
+/* Submit Idea button glow sweep effect */
+.btn-glow-submit::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(circle at 0 0,
+    rgba(45, 212, 191, 0.25),
+    transparent 55%);
+  opacity: 0;
+  transform: translateX(-40%);
+  transition: opacity 0.3s ease;
+}
+
+.btn-glow-submit:hover::before {
+  opacity: 1;
+  animation: sweep 1.3s ease-out forwards;
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-40%) translateY(10%);
+  }
+  100% {
+    transform: translateX(140%) translateY(-10%);
+  }
+}
+
+
+@keyframes blink-glow {
+  0%, 500% {
+    box-shadow:
+      0 0 10px #03f8cb,
+      0 0 10px #03f8cb,
+      inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 15px #03f8cb,
+      0 0 20px #03f8cb,
+      inset 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.btn-yellow-blink {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #03f8cb 0%, #03f8cb 50%, #03f8cb 100%);
+  color: #1a1a1a !important;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  animation: blink-glow 1.5s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+
+.btn-yellow-blink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+.btn-yellow-blink:hover {
+  transform: scale(1.05) translateY(-2px);
+  animation-play-state: paused;
+  box-shadow:
+    0 0 20px rgba(3, 248, 203, 0.5),
+    0 0 35px rgba(3, 248, 203, 0.3);
 }
 
 /* Section title underline */

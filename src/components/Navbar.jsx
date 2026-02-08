@@ -58,7 +58,7 @@ const Navbar = () => {
                         </a>
 
                         {/* Desktop Nav */}
-                        <div className="hidden md:flex items-center gap-8">
+                        <div className=" hidden md:flex items-center gap-8">
                             {navLinks.map((link) => (
                                 <a
                                     key={link.label}
@@ -74,17 +74,24 @@ const Navbar = () => {
                                     {link.label}
                                 </a>
                             ))}
-                            <Button size="sm" variant="outline" className="font-display" onClick={() => navigate('/idea-submission')}>
-                                Submit Idea
-                            </Button>
-                            <Button size="sm" className="btn-glow font-display" onClick={handleRegistration}>
+                            
+                            <Button size="sm" className="font-display relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
+                            onClick={handleRegistration}>
                                 Register
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                className="font-display relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/20 via-emerald-400/30 to-cyan-500/20 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
+                                onClick={() => navigate('/idea-submission')}
+                            >
+                                <span className="relative z-10">Submit Idea →</span>
                             </Button>
                         </div>
 
                         {/* Mobile Menu Button */}
                         <button
-                            className="md:hidden p-2 text-foreground"
+                            className="md:hidden p-2 text-teal-400"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
                             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -129,24 +136,25 @@ const Navbar = () => {
                                         {link.label}
                                     </a>
                                 ))}
+                                
                                 <Button
-                                    variant="outline"
-                                    className="font-display mt-4"
-                                    onClick={() => {
-                                        setIsMobileMenuOpen(false);
-                                        navigate('/idea-submission');
-                                    }}
-                                >
-                                    Submit Idea
-                                </Button>
-                                <Button
-                                    className="btn-glow font-display mt-2"
+                                    className="font-display mt-2 relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
                                     onClick={() => {
                                         setIsMobileMenuOpen(false);
                                         handleRegistration();
                                     }}
                                 >
                                     Register Now
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    className="font-display mt-2 relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/20 via-emerald-400/30 to-cyan-500/20 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
+                                    onClick={() => {
+                                        setIsMobileMenuOpen(false);
+                                        navigate('/idea-submission');
+                                    }}
+                                >
+                                    <span className="relative z-10">Submit Idea →</span>
                                 </Button>
                             </div>
                         </motion.div>

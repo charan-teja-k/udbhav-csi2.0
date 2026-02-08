@@ -367,9 +367,9 @@ export default function IdeaSubmission() {
                       You can update your problem statement below. Your previous submissions will be saved in history.
                     </p>
                     <div className="space-y-2 max-h-32 overflow-y-auto">
-                      {teamData.problemstatment.map((statement, index) => (
+                      {teamData.problemstatment.slice().reverse().map((statement, index) => (
                         <div key={index} className="bg-white/5 rounded p-2">
-                          <p className="text-gray-400 text-xs mb-1">Submission {index + 1}:</p>
+                          <p className="text-gray-400 text-xs mb-1">Submission {teamData.problemstatment.length - index}:</p>
                           <p className="text-gray-300 text-sm break-words whitespace-pre-wrap">
                             {statement}
                           </p>

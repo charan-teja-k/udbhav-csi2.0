@@ -220,13 +220,24 @@ export default function Home() {
             >
               <Button
                 size="lg"
-                className="text-lg px-8 py-6 shadow-lg shadow-teal-500/25"
+                className="text-lg px-5 py-4 shadow-lg shadow-teal-500/25 bg-transparent border border-teal-500/30 "
                 onClick={handleRegistration}
               >
                 Register Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </motion.div>
+            <Button
+                size="lg"
+                className="mt-7 text-lg px-4 py-3 btn-yellow-blink rounded-full"
+                onClick={() => navigate('/idea-submission')}
+              >
+                <span className="relative z-10 flex items-center">
+                  Submit Idea
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </span>
+              </Button>
+            
 
             {/* Stats */}
             <motion.div
