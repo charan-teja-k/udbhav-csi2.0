@@ -4,6 +4,7 @@ import { Search, Users, User, Lightbulb, Clock, Edit3, Check, AlertCircle, Arrow
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
+import axios from 'axios';
 
 export default function IdeaSubmission() {
   const canvasRef = useRef(null);
@@ -15,7 +16,6 @@ export default function IdeaSubmission() {
   const [teamData, setTeamData] = useState(null);
   const [error, setError] = useState('');
   const [problemStatement, setProblemStatement] = useState('');
-  const [existingIdea, setExistingIdea] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -131,49 +131,15 @@ export default function IdeaSubmission() {
     setIsVerifying(true);
     setError('');
     setTeamData(null);
-    setExistingIdea(null);
-
-    // DUMMY TEAM CODE FOR TESTING - Remove in production
-    // if (teamCode === 'TEAM-TEST123') {
-    //   setTeamData({
-    //     _id: 'dummy123',
-    //     teamName: 'Test Team Alpha',
-    //     teamCode: 'TEAM-TEST123',
-    //     teamLead: { name: 'John Doe' },
-    //     teamMembers: [
-    //       { name: 'Alice Smith' },
-    //       { name: 'Bob Johnson' }
-    //     ]
-    //   });
-    //   setIsVerifying(false);
-    //   return;
-    // }
 
     try {
       // Fetch team details
-      const teamRes = await fetch(`https://hackthon-backend-1-d2zj.onrender.com/team/${teamCode}`);
-      
-      if (!teamRes.ok) {
+      const teamRes = await axios.get(`https://hackthon-backend-1-d2zj.onrender.com/get-team-details/${teamCode}`);
+      if (!teamRes) {
         throw new Error('Team not found. Please check your team code.');
       }
       
-      const team = await teamRes.json();
-      setTeamData(team);
-
-      // Check for existing idea submission
-      try {
-        const ideaRes = await fetch(`https://hackthon-backend-1-d2zj.onrender.com/idea/${teamCode}`);
-        if (ideaRes.ok) {
-          const idea = await ideaRes.json();
-          if (idea) {
-            setExistingIdea(idea);
-            setProblemStatement(idea.currentProblemStatement || '');
-          }
-        }
-      } catch (ideaErr) {
-        // No existing idea, that's fine
-        console.log('No existing idea found');
-      }
+      setTeamData(teamRes.data);
     } catch (err) {
       setError(err.message || 'Failed to verify team. Please try again.');
     } finally {
@@ -181,7 +147,6 @@ export default function IdeaSubmission() {
     }
   };
 
-  // Submit idea
   const handleSubmitIdea = async () => {
     if (!problemStatement.trim()) {
       setError('Please enter your problem statement');
@@ -190,49 +155,20 @@ export default function IdeaSubmission() {
 
     setIsSubmitting(true);
     setError('');
-
-    // DUMMY SUBMISSION FOR TESTING - Remove in production
-    // if (teamCode === 'TEAM-TEST123') {
-    //   const now = new Date().toISOString();
-    //   const newHistory = existingIdea?.history ? [...existingIdea.history] : [];
-    //   if (existingIdea?.currentProblemStatement) {
-    //     newHistory.push({
-    //       problemStatement: existingIdea.currentProblemStatement,
-    //       changedAt: existingIdea.lastUpdatedAt || existingIdea.submittedAt
-    //     });
-    //   }
-    //   setExistingIdea({
-    //     teamCode: 'TEAM-TEST123',
-    //     currentProblemStatement: problemStatement.trim(),
-    //     submittedAt: existingIdea?.submittedAt || now,
-    //     lastUpdatedAt: now,
-    //     history: newHistory
-    //   });
-    //   setSubmitSuccess(true);
-    //   setTimeout(() => setSubmitSuccess(false), 3000);
-    //   setIsSubmitting(false);
-    //   return;
-    // }
-
     try {
-      const res = await fetch('https://hackthon-backend-1-d2zj.onrender.com/idea/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          teamCode: teamCode,
-          teamId: teamData._id,
-          problemStatement: problemStatement.trim()
-        })
+      const res = await axios.post('https://hackthon-backend-1-d2zj.onrender.com/ideasubmission', {
+        teamcode: teamCode,
+        statement: problemStatement.trim()
       });
-
-      const data = await res.json();
-
-      if (res.ok) {
+      
+      if (res) {
         setSubmitSuccess(true);
-        setExistingIdea(data.idea);
+        // Refresh team data to get updated problem statements
+        const teamRes = await axios.get(`https://hackthon-backend-1-d2zj.onrender.com/get-team-details/${teamCode}`);
+        setTeamData(teamRes.data);
         setTimeout(() => setSubmitSuccess(false), 3000);
       } else {
-        throw new Error(data.message || 'Failed to submit idea');
+        throw new Error('Failed to submit idea');
       }
     } catch (err) {
       setError(err.message || 'Failed to submit idea. Please try again.');
@@ -253,7 +189,6 @@ export default function IdeaSubmission() {
   const handleReset = () => {
     setTeamCode('');
     setTeamData(null);
-    setExistingIdea(null);
     setProblemStatement('');
     setError('');
   };
@@ -327,7 +262,7 @@ export default function IdeaSubmission() {
                     <input
                       type="text"
                       value={teamCode}
-                      onChange={(e) => setTeamCode(e.target.value.toUpperCase())}
+                      onChange={(e) => setTeamCode(e.target.value)}
                       placeholder="Enter your team code (e.g., TEAM-1234567890)"
                       className="w-full px-4 py-3 rounded-lg bg-white/5 border border-teal-500/30 text-white placeholder-gray-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all"
                       onKeyDown={(e) => e.key === 'Enter' && handleVerifyTeam()}
@@ -417,8 +352,8 @@ export default function IdeaSubmission() {
                   </div>
                 </div>
 
-                {/* Existing Idea Notice */}
-                {existingIdea && (
+                {/* Existing Idea Notice - Show if there are previous submissions */}
+                {teamData.problemstatment && teamData.problemstatment.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -428,25 +363,31 @@ export default function IdeaSubmission() {
                       <Edit3 className="w-4 h-4 text-yellow-400" />
                       <span className="text-yellow-400 font-medium">Previous Submission Found</span>
                     </div>
-                    <p className="text-gray-300 text-sm">
+                    <p className="text-gray-300 text-sm mb-3">
                       You can update your problem statement below. Your previous submissions will be saved in history.
                     </p>
-                    <p className="text-gray-500 text-xs mt-2">
-                      Last updated: {formatDate(existingIdea.lastUpdatedAt || existingIdea.submittedAt)}
-                    </p>
+                    <div className="space-y-2 max-h-32 overflow-y-auto">
+                      {teamData.problemstatment.map((statement, index) => (
+                        <div key={index} className="bg-white/5 rounded p-2">
+                          <p className="text-gray-400 text-xs mb-1">Submission {index + 1}:</p>
+                          <p className="text-gray-300 text-sm break-words whitespace-pre-wrap">
+                            {statement}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
 
-                {/* Problem Statement Input */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-3">
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-300">
                       <Lightbulb className="w-4 h-4 text-teal-400" />
                       Your Problem Statement
                     </label>
-                    {existingIdea && (
+                    {teamData.problemstatment && teamData.problemstatment.length > 0 && (
                       <span className="text-xs text-teal-400">
-                        {existingIdea ? 'Editing' : 'New Submission'}
+                        Editing
                       </span>
                     )}
                   </div>
@@ -496,57 +437,14 @@ export default function IdeaSubmission() {
                     </>
                   ) : (
                     <>
-                      {existingIdea ? <Edit3 className="w-4 h-4 mr-2" /> : <Check className="w-4 h-4 mr-2" />}
-                      {existingIdea ? 'Update Idea' : 'Submit Idea'}
+                      {teamData.problemstatment && teamData.problemstatment.length > 0 ? (
+                        <><Edit3 className="w-4 h-4 mr-2" /> Update Idea</>
+                      ) : (
+                        <><Check className="w-4 h-4 mr-2" /> Submit Idea</>
+                      )}
                     </>
                   )}
                 </Button>
-
-                {/* Submission History */}
-                {existingIdea?.history && existingIdea.history.length > 0 && (
-                  <div className="mt-8">
-                    <button
-                      onClick={() => setShowHistory(!showHistory)}
-                      className="flex items-center gap-2 text-gray-400 hover:text-teal-400 transition-colors mb-4"
-                    >
-                      <History className="w-4 h-4" />
-                      <span className="text-sm font-medium">
-                        {showHistory ? 'Hide' : 'Show'} Submission History ({existingIdea.history.length})
-                      </span>
-                    </button>
-
-                    <AnimatePresence>
-                      {showHistory && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="space-y-3 overflow-hidden"
-                        >
-                          {[...existingIdea.history].reverse().map((item, index) => (
-                            <motion.div
-                              key={index}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: index * 0.1 }}
-                              className="bg-white/5 border border-gray-700 rounded-lg p-4"
-                            >
-                              <div className="flex items-center gap-2 mb-2">
-                                <Clock className="w-3 h-3 text-gray-500" />
-                                <span className="text-gray-500 text-xs">
-                                  {formatDate(item.changedAt)}
-                                </span>
-                              </div>
-                              <p className="text-gray-300 text-sm whitespace-pre-wrap">
-                                {item.problemStatement}
-                              </p>
-                            </motion.div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                )}
               </motion.div>
             )}
           </div>
