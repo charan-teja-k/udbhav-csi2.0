@@ -489,7 +489,7 @@ export default function Home() {
             {
               date: "FEB 9-23, 2026",
               title: "Idea Submission",
-              content: "Submit your problem statement ideas in the google form.",
+              content: "Submit your problem statement ideas in the website.",
             },
             {
               date: "FEB 23-28, 2026",
