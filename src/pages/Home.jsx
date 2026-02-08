@@ -9,6 +9,7 @@ import { Timeline } from "@/components/ui/timeline";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import Navbar from "@/components/Navbar";
+import NotificationBanner from "@/components/NotificationBanner";
 import CountdownTimer from "@/components/CountdownTimer";
 import FloatingElements from "@/components/FloatingElements";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const canvasRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showNotification, setShowNotification] = useState(true);
   const registrationUrl = "/registration";
   const navigate = useNavigate();
   useEffect(() => {
@@ -145,6 +147,10 @@ export default function Home() {
       </div>
 
       <Navbar />
+
+      {showNotification && (
+        <NotificationBanner onClose={() => setShowNotification(false)} />
+      )}
 
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <FloatingElements />

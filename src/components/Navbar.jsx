@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const registrationUrl = "/registration";
     const navigate = useNavigate();
+    const location = useLocation();
+    const isHomePage = location.pathname === "/";
 
     useEffect(() => {
         const handleScroll = () => {
@@ -42,7 +44,16 @@ const Navbar = () => {
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-16 md:h-20">
                         {/* Logo */}
-                        <a href="#" className="font-display text-xl md:text-2xl font-bold gradient-text">
+                        <a 
+                            href={isHomePage ? "#" : "/"} 
+                            onClick={(e) => {
+                                if (!isHomePage) {
+                                    e.preventDefault();
+                                    navigate('/');
+                                }
+                            }}
+                            className="font-display text-xl md:text-2xl font-bold gradient-text"
+                        >
                             UDBHAV 2K26
                         </a>
 
@@ -51,12 +62,21 @@ const Navbar = () => {
                             {navLinks.map((link) => (
                                 <a
                                     key={link.label}
-                                    href={link.href}
+                                    href={isHomePage ? link.href : '/' + link.href}
+                                    onClick={(e) => {
+                                        if (!isHomePage) {
+                                            e.preventDefault();
+                                            navigate('/' + link.href);
+                                        }
+                                    }}
                                     className="relative text-sm md:text-base font-semibold text-white/80 hover:text-teal-300 tracking-wide transition-colors drop-shadow-[0_0_10px_rgba(20,184,166,0.35)] after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-gradient-to-r after:from-teal-400 after:via-cyan-400 after:to-teal-300 after:transition-transform after:duration-300 hover:after:scale-x-100"
                                 >
                                     {link.label}
                                 </a>
                             ))}
+                            <Button size="sm" variant="outline" className="font-display" onClick={() => navigate('/idea-submission')}>
+                                Submit Idea
+                            </Button>
                             <Button size="sm" className="btn-glow font-display" onClick={handleRegistration}>
                                 Register
                             </Button>
@@ -96,15 +116,31 @@ const Navbar = () => {
                                 {navLinks.map((link) => (
                                     <a
                                         key={link.label}
-                                        href={link.href}
+                                        href={isHomePage ? link.href : '/' + link.href}
                                         className="text-lg text-white/90 font-semibold py-3 border-b border-teal-500/20 tracking-wide"
-                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        onClick={(e) => {
+                                            setIsMobileMenuOpen(false);
+                                            if (!isHomePage) {
+                                                e.preventDefault();
+                                                navigate('/' + link.href);
+                                            }
+                                        }}
                                     >
                                         {link.label}
                                     </a>
                                 ))}
                                 <Button
-                                    className="btn-glow font-display mt-4"
+                                    variant="outline"
+                                    className="font-display mt-4"
+                                    onClick={() => {
+                                        setIsMobileMenuOpen(false);
+                                        navigate('/idea-submission');
+                                    }}
+                                >
+                                    Submit Idea
+                                </Button>
+                                <Button
+                                    className="btn-glow font-display mt-2"
                                     onClick={() => {
                                         setIsMobileMenuOpen(false);
                                         handleRegistration();
