@@ -27,7 +27,7 @@ export default function App() {
       <Route element={<ProblemStatement/>} path='/statement'/>
       <Route element={<IdeaSubmission/>} path='/idea-submission'/>
       <Route element={<Paymentpage/>}  path='/payment'/>
-      <Route element={<AdminPage />} path="/admin-7842xk29" />
+      <Route element={<AdminPage />} path="/admin" />
     </Routes>
     </BrowserRouter>
   )
