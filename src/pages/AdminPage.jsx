@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import calculateTotalAmount from "../utils/totalAmount"
-
+import { useSearchParams } from "react-router-dom"
 export default function AdminPage() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
-
-  const fetchTeams = async () => {
+const [searchParams] = useSearchParams();
+  const fetchTeams = async (adminCode) => {
     try {
       setLoading(true)
-      const res = await axios.get("https://hackthon-backend-1-d2zj.onrender.com/admin/teams")
+      const res = await axios.get(`https://hackthon-backend-1-d2zj.onrender.com/admin/teams?adminCode=${adminCode}`)
       
       setData(res.data)
     } catch (error) {
@@ -19,15 +19,24 @@ export default function AdminPage() {
     }
   }
 
-  useEffect(() => {
-    fetchTeams()
-  }, [])
+ useEffect(() => {
+    let adminCode = sessionStorage.getItem("adminCode");
+    if (!adminCode) {
+      adminCode = window.prompt("Enter Admin Code:");
 
+      if (!adminCode) {
+        alert("Admin code is required!");
+        return;
+      }
+      sessionStorage.setItem("adminCode", adminCode);
+    }
+
+    fetchTeams(adminCode);
+  }, []);
   const verifyTeam = async (teamName) => {
     await axios.post("https://hackthon-backend-1-d2zj.onrender.com/payment/paid", {teamName} )
     fetchTeams()
   }
-
   const markFraud = async (teamName) => {
     await axios.post("https://hackthon-backend-1-d2zj.onrender.com/payment/failed", { teamName })
     fetchTeams()
@@ -39,7 +48,13 @@ export default function AdminPage() {
   const Pendingteams = data.filter((team) => team.paymentStatus === "PENDING")
 
   const totalCollected = verifiedTeams.reduce((sum, team) => sum + calculateTotalAmount(team), 0)
-
+  const GetCountParticepents=()=>{
+    let count=0;
+    for(const team of verifiedTeams ){
+      count+=1 + team.teamMembers.length;
+    }
+    return count;
+  }
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
@@ -57,7 +72,7 @@ export default function AdminPage() {
                 <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                   <p className="text-sm font-medium text-gray-600">Total Collected</p>
                   <p className="mt-2 text-3xl font-bold text-green-600">₹{totalCollected.toLocaleString('en-IN')}</p>
-                  <p className="mt-1 text-xs text-gray-500">{verifiedTeams.length} verified teams</p>
+                  <p className="mt-1 text-xs text-gray-500">{verifiedTeams.length} verified teams={GetCountParticepents()}</p>
                 </div>
                 <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                   <p className="text-sm font-medium text-gray-600">Pending Verification</p>
@@ -292,4 +307,4 @@ export default function AdminPage() {
       </div>
     </div>
   )
-}
+} 
