@@ -91,7 +91,7 @@ export default function AdminPage() {
                     <thead className="bg-gray-50 text-xs font-medium uppercase tracking-wider text-gray-700">
                       <tr>
                         <th className="px-4 py-3">Team Name</th>
-                        <th className="px-4 py-3">Team Code</th>
+                        <th className="px-4 py-3">Team Lead</th>
                         <th className="px-4 py-3">Lead Mobile</th>
                         <th className="px-4 py-3 text-center">Members</th>
                         <th className="px-4 py-3">Transaction ID</th>
@@ -111,7 +111,7 @@ export default function AdminPage() {
                         pendingTeams.map((team) => (
                           <tr key={team.teamcode} className="transition-colors hover:bg-gray-50">
                             <td className="px-4 py-3 font-medium text-gray-900">{team.teamName}</td>
-                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamcode}</td>
+                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamLead.name}</td>
                             <td className="px-4 py-3 text-gray-600">{team.teamLead.mobile}</td>
                             <td className="px-4 py-3 text-center text-gray-600">{1 + team.teamMembers.length}</td>
                             <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.transactionId}</td>
@@ -158,7 +158,7 @@ export default function AdminPage() {
                     <thead className="bg-gray-50 text-xs font-medium uppercase tracking-wider text-gray-700">
                       <tr>
                         <th className="px-4 py-3">Team Name</th>
-                        <th className="px-4 py-3">Team Code</th>
+                        <th className="px-4 py-3">Team Lead</th>
                         <th className="px-4 py-3">Lead Mobile</th>
                         <th className="px-4 py-3 text-center">Members</th>
                         <th className="px-4 py-3">Transaction ID</th>
@@ -176,7 +176,7 @@ export default function AdminPage() {
                         verifiedTeams.map((team) => (
                           <tr key={team.teamcode} className="transition-colors hover:bg-gray-50">
                             <td className="px-4 py-3 font-medium text-gray-900">{team.teamName}</td>
-                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamcode}</td>
+                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamLead.name}</td>
                             <td className="px-4 py-3 text-gray-600">{team.teamLead.mobile}</td>
                             <td className="px-4 py-3 text-center text-gray-600">{1 + team.teamMembers.length}</td>
                             <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.transactionId}</td>
@@ -206,7 +206,7 @@ export default function AdminPage() {
                     <thead className="bg-gray-50 text-xs font-medium uppercase tracking-wider text-gray-700">
                       <tr>
                         <th className="px-4 py-3">Team Name</th>
-                        <th className="px-4 py-3">Team Code</th>
+                        <th className="px-4 py-3">Team Lead</th>
                         <th className="px-4 py-3">Lead Mobile</th>
                         <th className="px-4 py-3 text-center">Members</th>
                         <th className="px-4 py-3">Transaction ID</th>
@@ -224,7 +224,7 @@ export default function AdminPage() {
                         failedteams.map((team) => (
                           <tr key={team.teamcode} className="transition-colors hover:bg-gray-50">
                             <td className="px-4 py-3 font-medium text-gray-900">{team.teamName}</td>
-                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamcode}</td>
+                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamLead.name}</td>
                             <td className="px-4 py-3 text-gray-600">{team.teamLead.mobile}</td>
                             <td className="px-4 py-3 text-center text-gray-600">{1 + team.teamMembers.length}</td>
                             <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.transactionId}</td>
@@ -254,7 +254,7 @@ export default function AdminPage() {
                     <thead className="bg-gray-50 text-xs font-medium uppercase tracking-wider text-gray-700">
                       <tr>
                         <th className="px-4 py-3">Team Name</th>
-                        <th className="px-4 py-3">Team Code</th>
+                        <th className="px-4 py-3">Team Lead</th>
                         <th className="px-4 py-3">Lead Mobile</th>
                         <th className="px-4 py-3 text-center">Members</th>
                         <th className="px-4 py-3">Transaction ID</th>
@@ -272,7 +272,7 @@ export default function AdminPage() {
                         Pendingteams.map((team) => (
                           <tr key={team.teamcode} className="transition-colors hover:bg-gray-50">
                             <td className="px-4 py-3 font-medium text-gray-900">{team.teamName}</td>
-                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamcode}</td>
+                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamLead.name}</td>
                             <td className="px-4 py-3 text-gray-600">{team.teamLead.mobile}</td>
                             <td className="px-4 py-3 text-center text-gray-600">{1 + team.teamMembers.length}</td>
                             <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.transactionId}</td>
