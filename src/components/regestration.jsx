@@ -7,8 +7,7 @@ import fieldValidation from '../utils/fieldValidation';
 
 export default function Registration({setform, onsubmit}) {
   const navigate = useNavigate();
-  const [teamStatus, setTeamStatus] = useState(null); 
-  const [checking, setChecking] = useState(false);
+
   const [checkingLeadCsi, setCheckingLeadCsi] = useState(false);
   const [leadCsiChecked, setLeadCsiChecked] = useState(false);
 
@@ -175,29 +174,7 @@ export default function Registration({setform, onsubmit}) {
     }
   };
 
-  // Team name availability check
-  useEffect(() => {
-    if (!formData.teamName.trim()) {
-      setTeamStatus(null);
-      return;
-    }
 
-    const timer = setTimeout(async () => {
-      try {
-        setChecking(true);
-        const res = await axios.get(
-          `https://hackthon-backend-1-d2zj.onrender.com/check-team-name?name=${formData.teamName}`
-        );
-        setTeamStatus(res.data.available);
-      } catch (err) {
-        setTeamStatus(null);
-      } finally {
-        setChecking(false);
-      }
-    }, 600); 
-
-    return () => clearTimeout(timer);
-  }, [formData.teamName]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -289,24 +266,7 @@ export default function Registration({setform, onsubmit}) {
                       }}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#203a43] focus:outline-none transition-all duration-300 bg-gray-50 hover:bg-white"
                     />
-                    {checking && (
-                      <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
-                        <Loader2 className="animate-spin" size={14} />
-                        Checking availability...
-                      </p>
-                    )}
-                    {!checking && teamStatus === true && (
-                      <p className="flex items-center gap-1 text-sm text-green-600 mt-1">
-                        <CheckCircle size={16} />
-                        <span>Team name is available</span>
-                      </p>
-                    )}
-                    {!checking && teamStatus === false && (
-                      <p className="flex items-center gap-1 text-sm text-red-600 mt-1">
-                        <XCircle size={16} />
-                        Team name already taken
-                      </p>
-                    )}
+
                   </div>
 
                   <div>
