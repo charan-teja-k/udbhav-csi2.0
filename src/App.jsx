@@ -9,6 +9,8 @@ import Paymentpage from './pages/paymentpage';
 import AdminPage from './pages/AdminPage';
 import Preloader from './components/Preloader';
 import { AnimatePresence } from 'framer-motion';
+import SingelRegPage from "./pages/SingelRegPage"
+import SingelPayment from "./pages/singelPayment"
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,6 +30,8 @@ export default function App() {
       <Route element={<IdeaSubmission/>} path='/idea-submission'/>
       <Route element={<Paymentpage/>}  path='/payment'/>
       <Route element={<AdminPage />} path="/admin" />
+      <Route element={<SingelRegPage/>} path='/single-Reg'/>
+      <Route element={<SingelPayment/>} path='single/payment'/>
     </Routes>
     </BrowserRouter>
   )

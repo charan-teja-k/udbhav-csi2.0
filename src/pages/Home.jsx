@@ -166,6 +166,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             {/* Badge */}
+            <br></br>
             <motion.div
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-teal-500/30 bg-teal-500/10 mb-8"
               initial={{ opacity: 0, scale: 0.8 }}
