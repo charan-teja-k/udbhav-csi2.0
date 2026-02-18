@@ -13,6 +13,7 @@ import NotificationBanner from "@/components/NotificationBanner";
 import CountdownTimer from "@/components/CountdownTimer";
 import FloatingElements from "@/components/FloatingElements";
 import { Button } from "@/components/ui/button";
+import RegistrationModal from "@/components/RegistrationModal";
 
 
 
@@ -21,7 +22,7 @@ export default function Home() {
   const canvasRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showNotification, setShowNotification] = useState(true);
-  const registrationUrl = "/registration";
+  const [isRegModalOpen, setIsRegModalOpen] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     setIsLoaded(true);
@@ -133,7 +134,7 @@ export default function Home() {
   };
 
   const handleRegistration = () => {
-    navigate(registrationUrl);
+    setIsRegModalOpen(true);
   };
 
   return (
@@ -166,6 +167,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             {/* Badge */}
+            <br></br>
             <motion.div
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-teal-500/30 bg-teal-500/10 mb-8"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -583,6 +585,8 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <RegistrationModal isOpen={isRegModalOpen} onClose={() => setIsRegModalOpen(false)} />
     </div>
   );
 }

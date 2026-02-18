@@ -15,10 +15,7 @@ export default function ProblemStatements() {
   const [expandedProblem, setExpandedProblem] = useState(null)
   const navigation =useNavigate()
   const handleBack = () => {
-    console.log("Navigate back to home")
-    navigation(-1,{
-      replace:true
-    })
+    navigation(-1)
   }
 
  

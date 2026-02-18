@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
+import RegistrationModal from "@/components/RegistrationModal";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const registrationUrl = "/registration";
+    const [isRegModalOpen, setIsRegModalOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const isHomePage = location.pathname === "/";
@@ -27,8 +28,17 @@ const Navbar = () => {
     ];
 
     const handleRegistration = () => {
-        navigate(registrationUrl);
+        setIsRegModalOpen(true);
     };
+    const downloadPPT = () => {
+  const link = document.createElement("a");
+  link.href = "/ppt_template/ppt-udbhav.pptx";
+  link.download = "UDBHAV2026-IDEA-Presentation-Format.pptx";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 
     return (
         <>
@@ -59,6 +69,9 @@ const Navbar = () => {
 
                         {/* Desktop Nav */}
                         <div className=" hidden md:flex items-center gap-8">
+                            
+
+
                             {navLinks.map((link) => (
                                 <a
                                     key={link.label}
@@ -74,6 +87,10 @@ const Navbar = () => {
                                     {link.label}
                                 </a>
                             ))}
+                            <Button size="sm" className="font-display relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
+                            onClick={downloadPPT}>
+                                PPT TEMPLATE
+                            </Button>
                             
                             <Button size="sm" className="font-display relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
                             onClick={handleRegistration}>
@@ -147,6 +164,15 @@ const Navbar = () => {
                                     Register Now
                                 </Button>
                                 <Button
+                                    className="font-display mt-2 relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
+                                    onClick={() => {
+                                        setIsMobileMenuOpen(false);
+                                        downloadPPT();
+                                    }}
+                                >
+                                    PPT TEMPLATE
+                                </Button>
+                                <Button
                                     variant="outline"
                                     className="font-display mt-2 relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/20 via-emerald-400/30 to-cyan-500/20 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
                                     onClick={() => {
@@ -161,6 +187,8 @@ const Navbar = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <RegistrationModal isOpen={isRegModalOpen} onClose={() => setIsRegModalOpen(false)} />
         </>
     );
 };

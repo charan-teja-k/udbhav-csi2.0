@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import fieldValidation from '../utils/fieldValidation';
 
-
 export default function Registration({setform, onsubmit}) {
   const navigate = useNavigate();
-
+  const [teamStatus, setTeamStatus] = useState(null); 
+  const [checking, setChecking] = useState(false);
   const [checkingLeadCsi, setCheckingLeadCsi] = useState(false);
   const [leadCsiChecked, setLeadCsiChecked] = useState(false);
 
@@ -34,7 +34,6 @@ export default function Registration({setform, onsubmit}) {
   });
 
   const addTeamMember = () => {
-    console.log("add member");
     if (formData.teamMembers.length < 5) {
       setFormData({
         ...formData,
@@ -174,7 +173,30 @@ export default function Registration({setform, onsubmit}) {
     }
   };
 
+  // Team name availability check
+  useEffect(() => {
+    if (!formData.teamName.trim()) {
+      setTeamStatus(null);
+      return;
+    }
 
+    const timer = setTimeout(async () => {
+      try {
+        setChecking(true);
+        const res = await axios.get(
+          `https://hackthon-backend-1-d2zj.onrender.com/check-team-name?name=${formData.teamName}`
+        );
+        setTeamStatus(res.data.available);
+      } catch (err) {
+        setTeamStatus(null);
+      } finally {
+        setChecking(false);
+      }
+      
+    }, 600); 
+
+    return () => clearTimeout(timer);
+  }, [formData.teamName]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -212,8 +234,8 @@ export default function Registration({setform, onsubmit}) {
 
   const totalMembers = formData.teamMembers.length + 1;
   const isPaymentEnabled = totalMembers >= 4 && totalMembers <= 6;
-  
-  
+  const isRegValid = fieldValidation("regnum", formData.teamLead.regnum);
+  const showRegValidation = formData.teamLead.regnum.length > 0;
 
   return (
     <div className="w-full">
@@ -245,7 +267,7 @@ export default function Registration({setform, onsubmit}) {
                     Team Information
                   </h2>
                 </div>
-
+              
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-semibold mb-2 text-gray-700">
@@ -266,7 +288,24 @@ export default function Registration({setform, onsubmit}) {
                       }}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#203a43] focus:outline-none transition-all duration-300 bg-gray-50 hover:bg-white"
                     />
-
+                    {/* {checking && (
+                      <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
+                        <Loader2 className="animate-spin" size={14} />
+                        Checking availability...
+                      </p>
+                    )}
+                    {!checking && teamStatus === true && (
+                      <p className="flex items-center gap-1 text-sm text-green-600 mt-1">
+                        <CheckCircle size={16} />
+                        <span>Team name is available</span>
+                      </p>
+                    )}
+                    {!checking && teamStatus === false && (
+                      <p className="flex items-center gap-1 text-sm text-red-600 mt-1">
+                        <XCircle size={16} />
+                        Team name already taken
+                      </p>
+                    )} */}
                   </div>
 
                   <div>
@@ -362,8 +401,8 @@ export default function Registration({setform, onsubmit}) {
                     <input
                       type="text"
                       required
-                      
-                      
+                      pattern='2[2-6][a-zA-Z0-9]{8}'
+                      maxLength={10}
                       placeholder="Registration Number"
                       value={formData.teamLead.regnum}
                       onChange={(e) => updateTeamLead('regnum', e.target.value)}
@@ -534,6 +573,7 @@ export default function Registration({setform, onsubmit}) {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                    
                     <div>
                       <label className="block text-sm font-semibold mb-2 text-gray-700">
                         Name <span className="text-red-500">*</span>
@@ -555,8 +595,8 @@ export default function Registration({setform, onsubmit}) {
                       <input
                         type="text"
                         required
-                        
-                        
+                        pattern='2[2-6][a-zA-Z0-9]{8}'
+                        maxLength={10}
                         placeholder="Registration Number"
                         value={member.regnum}
                         onChange={(e) => updateTeamMember(member.id,'regnum', e.target.value)}
