@@ -1,11 +1,13 @@
-import React,{useEffect,useState} from "react";
+import React, { useState } from "react";
 import { Users, CreditCard, CheckCircle, IndianRupee, ArrowLeft } from "lucide-react";
 import axios from "axios"
 export default function PaymentSummary({ formData ,goback}) {
+  const [loading, setLoading] = useState(false);
+
   if (!formData) return null;
+
   const TEAM_LEAD_CSI_PRICE = 800;
   const TEAM_LEAD_NON_CSI_PRICE = 800;
-const [loading, setLoading] = useState(false);
 
   const teamLeadAmount = formData.teamLead.isCsi
     ? TEAM_LEAD_CSI_PRICE
@@ -40,10 +42,9 @@ const handlePayment = async () => {
       window.open(url, "_blank");
     }
 
-    console.log("Backend response:", res.data);
-  } catch (errors) {
-    console.error(errors.response)
-    const data = errors?.response?.data;
+  } catch (error) {
+    console.error(error.response)
+    const data = error?.response?.data;
 
 alert(
   Array.isArray(data?.errors)

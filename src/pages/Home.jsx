@@ -13,6 +13,7 @@ import NotificationBanner from "@/components/NotificationBanner";
 import CountdownTimer from "@/components/CountdownTimer";
 import FloatingElements from "@/components/FloatingElements";
 import { Button } from "@/components/ui/button";
+import RegistrationModal from "@/components/RegistrationModal";
 
 
 
@@ -21,7 +22,7 @@ export default function Home() {
   const canvasRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showNotification, setShowNotification] = useState(true);
-  const registrationUrl = "/registration";
+  const [isRegModalOpen, setIsRegModalOpen] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     setIsLoaded(true);
@@ -133,7 +134,7 @@ export default function Home() {
   };
 
   const handleRegistration = () => {
-    navigate(registrationUrl);
+    setIsRegModalOpen(true);
   };
 
   return (
@@ -584,6 +585,8 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <RegistrationModal isOpen={isRegModalOpen} onClose={() => setIsRegModalOpen(false)} />
     </div>
   );
 }

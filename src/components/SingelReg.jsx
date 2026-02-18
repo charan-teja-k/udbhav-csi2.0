@@ -228,7 +228,7 @@ export default function SingleRegistration({setform, onsubmit}) {
                       onChange={(e) => updateField('department', e.target.value)}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#203a43] focus:outline-none transition-all duration-300 bg-gray-50 hover:bg-white cursor-pointer"
                     >
-                      <option value="">Select department</option>
+                      <option value="">Select branch</option>
                       <option value="CSE">CSE</option>
                       <option value="IT">IT</option>
                       <option value="AIML">AIML</option>

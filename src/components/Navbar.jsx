@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
+import RegistrationModal from "@/components/RegistrationModal";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const registrationUrl = "/registration";
+    const [isRegModalOpen, setIsRegModalOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const isHomePage = location.pathname === "/";
@@ -27,11 +28,11 @@ const Navbar = () => {
     ];
 
     const handleRegistration = () => {
-        navigate(registrationUrl);
+        setIsRegModalOpen(true);
     };
     const downloadPPT = () => {
   const link = document.createElement("a");
-  link.href = "/ppt_template/UDBHAV2026-IDEA-Presentation-Format.pptx";
+  link.href = "/ppt_template/ppt-udbhav.pptx";
   link.download = "UDBHAV2026-IDEA-Presentation-Format.pptx";
   document.body.appendChild(link);
   link.click();
@@ -186,6 +187,8 @@ const Navbar = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <RegistrationModal isOpen={isRegModalOpen} onClose={() => setIsRegModalOpen(false)} />
         </>
     );
 };

@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import calculateTotalAmount from "../utils/totalAmount"
-import { useSearchParams } from "react-router-dom"
 export default function AdminPage() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
-const [searchParams] = useSearchParams();
   const [singeldata, setsingelData] = useState([])
 
   const fetchTeams = async (adminCode) => {
@@ -66,7 +64,7 @@ const [searchParams] = useSearchParams();
   }
   const marksingelFraud = async (name,_id) => {
     let adminCode = sessionStorage.getItem("adminCode");
-    await axios.post(`https://hackthon-backend-1-d2zj.onrender.com/admin/payment/failed?adminCode=${adminCode}`, { name,id })
+    await axios.post(`https://hackthon-backend-1-d2zj.onrender.com/admin/payment/failed?adminCode=${adminCode}`, { name, _id })
     fetchTeams(adminCode)
     fetchSingels(adminCode)
   }
@@ -76,7 +74,7 @@ const [searchParams] = useSearchParams();
   let verifiedTeams = data.filter((team) => team.paymentStatus === "PAID")
   let failedteams = data.filter((team) => team.paymentStatus === "FAILED")
   let Pendingteams = data.filter((team) => team.paymentStatus === "PENDING")
- 
+
 const parsedSingles = singeldata.map(member => ({
   _id:member._id,
     teamcode: `SINGLE-${member.mobile}`,
@@ -93,7 +91,9 @@ const parsedSingles = singeldata.map(member => ({
   isSingle: true
 }));
 pendingTeams=[...pendingTeams,...parsedSingles.filter((data)=>data.paymentStatus==="DONE")]
-verifiedTeams=[...verifiedTeams,...parsedSingles.filter((data)=>data.paymentStatus==="PAID")]
+const verifiedSinglesOnly = parsedSingles.filter((data) => data.paymentStatus === "PAID")
+const verifiedTeamsOnly = verifiedTeams
+verifiedTeams=[...verifiedTeams,...verifiedSinglesOnly]
 failedteams=[...failedteams,...parsedSingles.filter(data=>data.paymentStatus==="FAILED")]
 Pendingteams=[...Pendingteams,...parsedSingles.filter(data=>data.paymentStatus==="PENDING")]
 let totalCollected = verifiedTeams.reduce((sum, team) => {
@@ -143,7 +143,7 @@ let totalSingel = parsedSingles.filter(
                  <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                   <p className="text-sm font-medium text-gray-600">Total Singel Collected</p>
                   <p className="mt-2 text-3xl font-bold text-green-600">₹{totalSingelsCollected.toLocaleString('en-IN')}</p>
-                  <p className="mt-1 text-xs text-gray-500"> verified Singel={totalSingel}</p>
+                  <p className="mt-1 text-xs text-gray-500"> verified Single={totalSingel}</p>
                 </div>
                 <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                   <p className="text-sm font-medium text-gray-600">Pending Verification</p>
@@ -189,7 +189,7 @@ let totalSingel = parsedSingles.filter(
                     <tbody className="divide-y divide-gray-200">
                       {pendingTeams.length === 0 ? (
                         <tr>
-                          <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                          <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
                             No pending verifications
                           </td>
                         </tr>
@@ -238,7 +238,7 @@ let totalSingel = parsedSingles.filter(
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">Verified Teams</h2>
                 <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
-                  {verifiedTeams.length} verified
+                  {verifiedTeamsOnly.length} verified
                 </span>
               </div>
 
@@ -256,14 +256,14 @@ let totalSingel = parsedSingles.filter(
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {verifiedTeams.length === 0 ? (
+                      {verifiedTeamsOnly.length === 0 ? (
                         <tr>
                           <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
                             No verified teams yet
                           </td>
                         </tr>
                       ) : (
-                        verifiedTeams.map((team) => (
+                        verifiedTeamsOnly.map((team) => (
                           <tr key={team.teamcode} className="transition-colors hover:bg-gray-50">
                             <td className="px-4 py-3 font-medium text-gray-900">{team.teamName}</td>
                             <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.teamLead.name}</td>
@@ -271,8 +271,51 @@ let totalSingel = parsedSingles.filter(
                             <td className="px-4 py-3 text-center text-gray-600">{1 + team.teamMembers.length}</td>
                             <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.transactionId}</td>
                             <td className="px-4 py-3 text-right font-semibold text-gray-900">
-                              ₹{team.isSingle?team.amount:
-                              calculateTotalAmount(team)}
+                              ₹{calculateTotalAmount(team)}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section className="mb-12">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-gray-800">Verified Individual Members</h2>
+                <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+                  {verifiedSinglesOnly.length} verified
+                </span>
+              </div>
+
+              <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-max text-left text-sm">
+                    <thead className="bg-gray-50 text-xs font-medium uppercase tracking-wider text-gray-700">
+                      <tr>
+                        <th className="px-4 py-3">Name</th>
+                        <th className="px-4 py-3">Mobile</th>
+                        <th className="px-4 py-3">Transaction ID</th>
+                        <th className="px-4 py-3 text-right">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {verifiedSinglesOnly.length === 0 ? (
+                        <tr>
+                          <td colSpan={4} className="px-4 py-8 text-center text-gray-500">
+                            No verified individual members yet
+                          </td>
+                        </tr>
+                      ) : (
+                        verifiedSinglesOnly.map((member) => (
+                          <tr key={member.teamcode} className="transition-colors hover:bg-gray-50">
+                            <td className="px-4 py-3 font-medium text-gray-900">{member.teamLead.name}</td>
+                            <td className="px-4 py-3 text-gray-600">{member.teamLead.mobile}</td>
+                            <td className="px-4 py-3 font-mono text-xs text-gray-600">{member.transactionId}</td>
+                            <td className="px-4 py-3 text-right font-semibold text-gray-900">
+                              ₹{member.amount}
                             </td>
                           </tr>
                         ))

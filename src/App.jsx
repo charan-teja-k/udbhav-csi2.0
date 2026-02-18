@@ -31,7 +31,7 @@ export default function App() {
       <Route element={<Paymentpage/>}  path='/payment'/>
       <Route element={<AdminPage />} path="/admin" />
       <Route element={<SingelRegPage/>} path='/single-Reg'/>
-      <Route element={<SingelPayment/>} path='single/payment'/>
+      <Route element={<SingelPayment/>} path='/single/payment'/>
     </Routes>
     </BrowserRouter>
   )
