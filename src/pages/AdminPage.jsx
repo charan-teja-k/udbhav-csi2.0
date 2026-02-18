@@ -141,7 +141,7 @@ let totalSingel = parsedSingles.filter(
                   <p className="mt-1 text-xs text-gray-500">{verifiedTeams.length} verified teams={GetCountParticepents()}</p>
                 </div>
                  <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-                  <p className="text-sm font-medium text-gray-600">Total Singel Collected</p>
+                  <p className="text-sm font-medium text-gray-600">Total Single Collected</p>
                   <p className="mt-2 text-3xl font-bold text-green-600">₹{totalSingelsCollected.toLocaleString('en-IN')}</p>
                   <p className="mt-1 text-xs text-gray-500"> verified Single={totalSingel}</p>
                 </div>
