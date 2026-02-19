@@ -96,12 +96,8 @@ const verifiedTeamsOnly = verifiedTeams
 verifiedTeams=[...verifiedTeams,...verifiedSinglesOnly]
 failedteams=[...failedteams,...parsedSingles.filter(data=>data.paymentStatus==="FAILED")]
 Pendingteams=[...Pendingteams,...parsedSingles.filter(data=>data.paymentStatus==="PENDING")]
-let totalCollected = verifiedTeams.reduce((sum, team) => {
-  const amount = team.isSingle
-    ? Number(team.amount)
-    : Number(calculateTotalAmount(team));
-
-  return sum + amount;
+let totalCollected = verifiedTeamsOnly.reduce((sum, team) => {
+  return sum + Number(calculateTotalAmount(team));
 }, 0);
 let totalSingelsCollected = parsedSingles
   .filter(data => data.paymentStatus === "PAID")
@@ -110,6 +106,8 @@ let totalSingelsCollected = parsedSingles
 let totalSingel = parsedSingles.filter(
   data => data.paymentStatus === "PAID"
 ).length;
+
+let grandTotal = totalCollected + totalSingelsCollected;
 
   const GetCountParticepents=()=>{
     let count=0;
@@ -138,12 +136,17 @@ let totalSingel = parsedSingles.filter(
                 <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                   <p className="text-sm font-medium text-gray-600">Total Collected</p>
                   <p className="mt-2 text-3xl font-bold text-green-600">₹{totalCollected.toLocaleString('en-IN')}</p>
-                  <p className="mt-1 text-xs text-gray-500">{verifiedTeams.length} verified teams={GetCountParticepents()}</p>
+                  <p className="mt-1 text-xs text-gray-500">{verifiedTeamsOnly.length} verified teams={GetCountParticepents()}</p>
                 </div>
                  <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                   <p className="text-sm font-medium text-gray-600">Total Single Collected</p>
                   <p className="mt-2 text-3xl font-bold text-green-600">₹{totalSingelsCollected.toLocaleString('en-IN')}</p>
                   <p className="mt-1 text-xs text-gray-500"> verified Single={totalSingel}</p>
+                </div>
+                <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+                  <p className="text-sm font-medium text-gray-600">Grand Total Collected</p>
+                  <p className="mt-2 text-3xl font-bold text-emerald-700">₹{grandTotal.toLocaleString('en-IN')}</p>
+                  <p className="mt-1 text-xs text-gray-500">Teams + Individuals</p>
                 </div>
                 <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                   <p className="text-sm font-medium text-gray-600">Pending Verification</p>
