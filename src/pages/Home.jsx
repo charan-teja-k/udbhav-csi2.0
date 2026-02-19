@@ -249,7 +249,7 @@ export default function Home() {
               transition={{ delay: 1.1 }}
             >
               {[
-                { value: "100+", label: "Participants" },
+                { value: "200+", label: "Participants" },
                 { value: "24H", label: "Duration" },
                 { value: "35K+", label: "In Prizes" },
                 { value: "20+", label: "Mentors" },
