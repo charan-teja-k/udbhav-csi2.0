@@ -64,7 +64,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                 </div>
                 <div className="text-center">
                   <h3 className="text-white font-semibold text-lg mb-1">Individual</h3>
-                  <p className="text-gray-400 text-xs leading-relaxed">Register as a solo participant</p>
+                  <p className="text-gray-400 text-xs leading-relaxed">Register as a solo participant and team up later</p>
                 </div>
                 <ArrowRight className="w-4 h-4 text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-4 right-4" />
               </motion.button>
@@ -81,7 +81,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                 </div>
                 <div className="text-center">
                   <h3 className="text-white font-semibold text-lg mb-1">Team</h3>
-                  <p className="text-gray-400 text-xs leading-relaxed">Register with a team of up to 6</p>
+                  <p className="text-gray-400 text-xs leading-relaxed">Register with a team of up to 6 (min 4 members)</p>
                 </div>
                 <ArrowRight className="w-4 h-4 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-4 right-4" />
               </motion.button>
