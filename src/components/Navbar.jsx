@@ -9,6 +9,7 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isRegModalOpen, setIsRegModalOpen] = useState(false);
+    const [showComingSoon, setShowComingSoon] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const isHomePage = location.pathname === "/";
@@ -31,13 +32,8 @@ const Navbar = () => {
         setIsRegModalOpen(true);
     };
     const downloadPPT = () => {
-  const link = document.createElement("a");
-  link.href = "/ppt_template/ppt-udbhav.pptx";
-  link.download = "UDBHAV2026-IDEA-Presentation-Format.pptx";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+        setShowComingSoon(true);
+    };
 
 
     return (
@@ -189,6 +185,37 @@ const Navbar = () => {
             </AnimatePresence>
 
             <RegistrationModal isOpen={isRegModalOpen} onClose={() => setIsRegModalOpen(false)} />
+
+            <AnimatePresence>
+                {showComingSoon && (
+                    <motion.div
+                        className="fixed inset-0 z-50 flex items-center justify-center"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setShowComingSoon(false)}
+                    >
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+                        <motion.div
+                            className="relative z-10 flex flex-col items-center gap-4 rounded-2xl border border-teal-500/30 bg-background/90 px-12 py-10 shadow-2xl backdrop-blur-lg"
+                            initial={{ scale: 0.85, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.85, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <span className="text-4xl font-bold gradient-text font-display tracking-wide">Coming Soon</span>
+                            <p className="text-white/60 text-sm">The PPT template will be available shortly. Stay tuned!</p>
+                            <Button
+                                size="sm"
+                                className="mt-2 rounded-full border-0 px-8 py-2 text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur hover:text-white"
+                                onClick={() => setShowComingSoon(false)}
+                            >
+                                Close
+                            </Button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 };
