@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import calculateTotalAmount from "../utils/totalAmount"
+import { Button } from "@/components/ui/button";
+import { motion, stagger, useAnimate, useInView } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 export default function AdminPage() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [singeldata, setsingelData] = useState([])
-
+  const navigate=useNavigate()
   const fetchTeams = async (adminCode) => {
     try {
       setLoading(true)
@@ -68,7 +72,18 @@ export default function AdminPage() {
     fetchTeams(adminCode)
     fetchSingels(adminCode)
   }
-
+const deletePenindgsingel = async (_id) => {
+    let adminCode = sessionStorage.getItem("adminCode");
+    await axios.delete(`https://hackthon-backend-1-d2zj.onrender.com/admin/deletePending/singel?_id=${_id}&adminCode=${adminCode}`)
+    fetchTeams(adminCode)
+    fetchSingels(adminCode)
+  }
+ const deletePenindgteam = async (_id) => {
+    let adminCode = sessionStorage.getItem("adminCode");
+    await axios.delete(`https://hackthon-backend-1-d2zj.onrender.com/admin/deletePending/team?_id=${_id}&adminCode=${adminCode}`)
+    fetchTeams(adminCode)
+    fetchSingels(adminCode)
+  }
 
   let pendingTeams = data.filter((team) => team.paymentStatus === "DONE")
   let verifiedTeams = data.filter((team) => team.paymentStatus === "PAID")
@@ -165,7 +180,23 @@ let grandTotal = totalCollected + totalSingelsCollected;
                 </div>
               </div>
             </section>
-
+            <motion.div
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9 }}
+            >
+              <Button
+                size="lg"
+                className="text-lg px-5 py-4 shadow-lg shadow-teal-500/25 bg-transparent border border-teal-500/30 "
+                onClick={()=>{
+                  navigate("/admin/SubmessionsPage")
+                }}
+              >
+                Submsiions
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </motion.div>
             <section className="mb-12">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">Pending Verification</h2>
@@ -415,6 +446,19 @@ let grandTotal = totalCollected + totalSingelsCollected;
                             <td className="px-4 py-3 font-mono text-xs text-gray-600">{team.transactionId}</td>
                             <td className="px-4 py-3 text-right font-semibold text-gray-900">
                               ₹{calculateTotalAmount(team)}
+                            </td>
+                            <td className="px-4 py-3">
+                              <div className="flex items-center justify-center gap-2">
+                                <button
+                                  onClick={() =>
+                                    team.isSingle?deletePenindgsingel(team._id): deletePenindgteam(team._id)
+                                    }
+                                  className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                >
+                                  delete
+                                </button>
+                                
+                              </div>
                             </td>
                           </tr>
                         ))
