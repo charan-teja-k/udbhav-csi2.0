@@ -489,7 +489,7 @@ export default function Home() {
               content: "Start your hackathon journey with initial registration.",
             },
             {
-              date: "FEB 9-23, 2026",
+              date: "FEB 9-25, 2026",
               title: "Idea Submission",
               content: "Submit your problem statement ideas in the website.",
             },
