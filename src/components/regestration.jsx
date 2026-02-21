@@ -401,8 +401,8 @@ export default function Registration({setform, onsubmit}) {
                     <input
                       type="text"
                       required
-                      pattern='2[2-6][a-zA-Z0-9]{8}'
-                      maxLength={10}
+                      pattern=".*\S+.*"
+                      title="Registration number cannot be empty or whitespace only"
                       placeholder="Registration Number"
                       value={formData.teamLead.regnum}
                       onChange={(e) => updateTeamLead('regnum', e.target.value)}
@@ -595,8 +595,8 @@ export default function Registration({setform, onsubmit}) {
                       <input
                         type="text"
                         required
-                        pattern='2[2-6][a-zA-Z0-9]{8}'
-                        maxLength={10}
+                        pattern=".*\S+.*"
+                        title="Registration number cannot be empty or whitespace only"
                         placeholder="Registration Number"
                         value={member.regnum}
                         onChange={(e) => updateTeamMember(member.id,'regnum', e.target.value)}
