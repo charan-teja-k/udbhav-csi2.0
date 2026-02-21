@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, User, X, ArrowRight } from "lucide-react";
+import { Users, User, X, ArrowRight, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const RegistrationModal = ({ isOpen, onClose }) => {
@@ -52,22 +52,20 @@ const RegistrationModal = ({ isOpen, onClose }) => {
 
             {/* Options */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Single Registration */}
-              <motion.button
-                onClick={() => handleSelect("/single-Reg")}
-                className="group relative flex flex-col items-center gap-4 p-6 rounded-xl border border-white/10 bg-white/5 hover:border-teal-500/50 hover:bg-teal-500/10 transition-all duration-300 text-left"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <div className="w-14 h-14 rounded-full bg-teal-500/20 flex items-center justify-center group-hover:bg-teal-500/30 transition-colors">
-                  <User className="w-7 h-7 text-teal-400" />
+              {/* Single Registration - Closed */}
+              <div className="relative flex flex-col items-center gap-4 p-6 rounded-xl border border-white/10 bg-white/5 opacity-60 cursor-not-allowed text-left">
+                <div className="w-14 h-14 rounded-full bg-gray-500/20 flex items-center justify-center">
+                  <User className="w-7 h-7 text-gray-500" />
                 </div>
                 <div className="text-center">
-                  <h3 className="text-white font-semibold text-lg mb-1">Individual</h3>
-                  <p className="text-gray-400 text-xs leading-relaxed">Register as a solo participant and team up later</p>
+                  <h3 className="text-gray-400 font-semibold text-lg mb-1">Individual</h3>
+                  <p className="text-gray-500 text-xs leading-relaxed">Registrations are closed</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-4 right-4" />
-              </motion.button>
+                <div className="absolute top-3 right-3 flex items-center gap-1 bg-red-500/20 border border-red-500/40 rounded-full px-2 py-0.5">
+                  <Lock className="w-3 h-3 text-red-400" />
+                  <span className="text-red-400 text-xs font-medium">Closed</span>
+                </div>
+              </div>
 
               {/* Team Registration */}
               <motion.button
