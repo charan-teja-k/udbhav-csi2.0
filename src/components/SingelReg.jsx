@@ -164,6 +164,8 @@ export default function SingleRegistration({setform, onsubmit}) {
                     <input
                       type="text"
                       required
+                      pattern=".*\S+.*"
+                      title="Registration number cannot be empty or whitespace only"
                       placeholder="Registration Number"
                       value={formData.regnum}
                       onChange={(e) => updateField('regnum', e.target.value)}
