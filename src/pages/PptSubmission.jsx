@@ -22,8 +22,21 @@ export default function PptSubmission() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [dragOver, setDragOver] = useState(false);
+  const [checkPptUploaded,setCheckUploded]=useState(null)
 
-  // Canvas animation
+useEffect(() => {
+  if (!teamData) return;
+  fetchPptUrl();
+}, [teamData]);
+  const fetchPptUrl=async()=>{
+    try {
+      const res=await axios.get(`https://hackthon-backend-1-d2zj.onrender.com/ppt/getLink?teamcode=${teamCode}`)
+      setCheckUploded(res.data)
+      console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -197,7 +210,7 @@ export default function PptSubmission() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const handleSubmitPpt = async () => {
+  const handleSubmitPpt = async (teamcode) => {
     if (!selectedFile) {
       setError('Please select a PDF file to upload.');
       return;
@@ -215,6 +228,10 @@ export default function PptSubmission() {
       );
 
       setCloudinaryUrl(secureUrl);
+      const res=await axios.post("https://hackthon-backend-1-d2zj.onrender.com/ppt",{teamcode,pptlink:secureUrl}
+      )
+              setCheckUploded(res.data)
+
       setSubmitSuccess(true);
       setSelectedFile(null);
       setUploadProgress(null);
@@ -414,7 +431,8 @@ export default function PptSubmission() {
                 </AnimatePresence>
 
                 {/* File Upload Area */}
-                <div className="mb-6">
+               {!checkPptUploaded?.ppt?
+               ( <div className="mb-6">
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-3">
                     <FileText className="w-4 h-4 text-teal-400" />
                     Upload Presentation (PDF only, max 20 MB)
@@ -491,9 +509,7 @@ export default function PptSubmission() {
                       Choose a different file
                     </button>
                   )}
-                </div>
-
-                {/* Upload Progress Bar */}
+                    {/* Upload Progress Bar */}
                 <AnimatePresence>
                   {uploadProgress !== null && (
                     <motion.div
@@ -517,36 +533,64 @@ export default function PptSubmission() {
                     </motion.div>
                   )}
                 </AnimatePresence>
+                 {/* Error */}
+              {<>
+    <motion.div>
+      <Button
+        onClick={() => handleSubmitPpt(teamCode)}
+        disabled={isSubmitting || !selectedFile}
+        className="w-full py-3"
+      >
+        {isSubmitting ? (
+          <>
+            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+            Uploading...
+          </>
+        ) : (
+          <>
+            <Upload className="w-4 h-4 mr-2" />
+            Submit PPT
+          </>
+        )}
+      </Button>
+    </motion.div>
+  </>}
+                </div>
+                ) : (
+  /* Already Uploaded State - Read Only */
+  <div className="flex items-center gap-3 w-full p-4 rounded-xl border border-teal-500/30 bg-teal-500/10">
+    {/* PDF Icon */}
+    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-teal-500/20 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+    </div>
 
-                {/* Error */}
-                {error && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 text-red-400 text-sm mb-4"
-                  >
-                    <AlertCircle className="w-4 h-4" />
-                    {error}
-                  </motion.div>
-                )}
+    {/* File Info */}
+    <div className="flex flex-col min-w-0 flex-1">
+      <span className="text-sm font-medium text-white truncate">
+  {checkPptUploaded?.ppt}
+      </span>
+      <span className="text-xs text-teal-400 flex items-center gap-1 mt-0.5">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        Already uploaded
+      </span>
+    </div>
+  </div>
+)}
 
-                <Button
-                  onClick={handleSubmitPpt}
-                  disabled={isSubmitting || !selectedFile}
-                  className="w-full py-3"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
-                      Uploading...
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="w-4 h-4 mr-2" />
-                      Submit PPT
-                    </>
-                  )}
-                </Button>
+               
+
+              
+
+               
+
+                
               </motion.div>
             )}
           </div>
