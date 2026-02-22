@@ -228,7 +228,21 @@ export default function Registration({setform, onsubmit}) {
   useEffect(() => {
     const saved = localStorage.getItem("formdata");
     if (saved) {
-      setFormData(JSON.parse(saved));
+      const parsed = JSON.parse(saved);
+      const validYears = ['2nd Year', '3rd Year', '4th Year'];
+
+      // Fix stale '1st Year' values from old localStorage data
+      if (parsed.teamLead && !validYears.includes(parsed.teamLead.year)) {
+        parsed.teamLead.year = '2nd Year';
+      }
+      if (Array.isArray(parsed.teamMembers)) {
+        parsed.teamMembers = parsed.teamMembers.map(member => ({
+          ...member,
+          year: validYears.includes(member.year) ? member.year : '2nd Year'
+        }));
+      }
+
+      setFormData(parsed);
     }
   }, []);
 

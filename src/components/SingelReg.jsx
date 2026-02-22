@@ -12,7 +12,7 @@ export default function SingleRegistration({setform, onsubmit}) {
     email: '',
     mobile: '',
     department: '',
-    year: '1st Year',
+    year: '2nd Year',
     location: '',
     tshirtSize: '',
     collegeType: 'srkr',
