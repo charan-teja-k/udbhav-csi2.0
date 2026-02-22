@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import axios from 'axios';
+import { uploadToCloudinary } from '@/components/FileUpload';
 
 export default function PptSubmission() {
   const canvasRef = useRef(null);
@@ -17,7 +18,9 @@ export default function PptSubmission() {
   const [error, setError] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [dragOver, setDragOver] = useState(false);
 
   // Canvas animation
@@ -201,23 +204,25 @@ export default function PptSubmission() {
     }
 
     setIsSubmitting(true);
+    setUploadProgress(0);
     setError('');
 
     try {
-      const formData = new FormData();
-      formData.append('teamcode', teamCode);
-      formData.append('ppt', selectedFile);
+      const secureUrl = await uploadToCloudinary(
+        selectedFile,
+        teamData.teamName,
+        setUploadProgress
+      );
 
-      await axios.post('https://hackthon-backend-1-d2zj.onrender.com/ppt-submission', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
+      setCloudinaryUrl(secureUrl);
       setSubmitSuccess(true);
       setSelectedFile(null);
+      setUploadProgress(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
-      setTimeout(() => setSubmitSuccess(false), 4000);
+      setTimeout(() => setSubmitSuccess(false), 6000);
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Failed to upload PPT. Please try again.');
+      setError(err.message || 'Failed to upload PPT. Please try again.');
+      setUploadProgress(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -229,6 +234,8 @@ export default function PptSubmission() {
     setSelectedFile(null);
     setError('');
     setSubmitSuccess(false);
+    setUploadProgress(null);
+    setCloudinaryUrl('');
   };
 
   return (
@@ -426,14 +433,16 @@ export default function PptSubmission() {
                   {/* Drop Zone */}
                   {!selectedFile ? (
                     <div
-                      onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                      onDragOver={(e) => { e.preventDefault(); if (!isSubmitting) setDragOver(true); }}
                       onDragLeave={() => setDragOver(false)}
-                      onDrop={handleDrop}
-                      onClick={() => fileInputRef.current?.click()}
-                      className={`cursor-pointer flex flex-col items-center justify-center gap-4 p-10 rounded-xl border-2 border-dashed transition-all duration-200
-                        ${dragOver
-                          ? 'border-teal-400 bg-teal-500/15'
-                          : 'border-teal-500/30 bg-white/5 hover:border-teal-400/60 hover:bg-teal-500/10'
+                      onDrop={isSubmitting ? undefined : handleDrop}
+                      onClick={() => !isSubmitting && fileInputRef.current?.click()}
+                      className={`flex flex-col items-center justify-center gap-4 p-10 rounded-xl border-2 border-dashed transition-all duration-200
+                        ${isSubmitting
+                          ? 'border-white/10 bg-white/5 opacity-50 cursor-not-allowed'
+                          : dragOver
+                            ? 'cursor-pointer border-teal-400 bg-teal-500/15'
+                            : 'cursor-pointer border-teal-500/30 bg-white/5 hover:border-teal-400/60 hover:bg-teal-500/10'
                         }`}
                     >
                       <div className="w-14 h-14 rounded-full bg-teal-500/20 flex items-center justify-center">
@@ -464,7 +473,8 @@ export default function PptSubmission() {
                       </div>
                       <button
                         onClick={handleRemoveFile}
-                        className="flex-shrink-0 p-1.5 rounded-full text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                        disabled={isSubmitting}
+                        className="flex-shrink-0 p-1.5 rounded-full text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -474,13 +484,39 @@ export default function PptSubmission() {
                   {/* Replace file button */}
                   {selectedFile && (
                     <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="mt-3 text-xs text-teal-400 hover:text-teal-300 transition-colors"
+                      onClick={() => !isSubmitting && fileInputRef.current?.click()}
+                      disabled={isSubmitting}
+                      className="mt-3 text-xs text-teal-400 hover:text-teal-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Choose a different file
                     </button>
                   )}
                 </div>
+
+                {/* Upload Progress Bar */}
+                <AnimatePresence>
+                  {uploadProgress !== null && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="mb-4"
+                    >
+                      <div className="flex items-center justify-between text-xs text-gray-400 mb-1.5">
+                        <span>Uploading to Cloudinary...</span>
+                        <span>{uploadProgress}%</span>
+                      </div>
+                      <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-500 rounded-full"
+                          initial={{ width: '0%' }}
+                          animate={{ width: `${uploadProgress}%` }}
+                          transition={{ ease: 'linear', duration: 0.2 }}
+                        />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 {/* Error */}
                 {error && (

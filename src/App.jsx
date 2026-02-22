@@ -10,6 +10,8 @@ import AdminPage from './pages/AdminPage';
 import Preloader from './components/Preloader';
 import { AnimatePresence } from 'framer-motion';
 import SubmessionsPage from './pages/SubmessionsPage';
+
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
