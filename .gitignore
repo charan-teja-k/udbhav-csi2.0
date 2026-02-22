@@ -12,7 +12,9 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# Windows reserved device names
+nul
+
 .vscode/*
 !.vscode/extensions.json
 .idea

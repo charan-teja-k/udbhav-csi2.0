@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import Registration from '../components/regestration';
 import PaymentSummary from '../components/Payment';
 import QrPayment from '../components/QrPaymet';
@@ -7,6 +9,12 @@ export default function RegistrationPage() {
   const canvasRef = useRef(null);
   const [formdata, setformData] = useState(null);
   const [back, setBack] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPopup(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     setformData(prev => ({
@@ -171,6 +179,67 @@ export default function RegistrationPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
+      {/* 1st Year Closed Popup */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Backdrop */}
+            <motion.div
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => setShowPopup(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+
+            {/* Card */}
+            <motion.div
+              className="relative z-10 w-full max-w-sm bg-[#0a0f1a] border border-red-500/40 rounded-2xl p-7 shadow-2xl shadow-red-500/10 text-center"
+              initial={{ scale: 0.85, opacity: 0, y: 24 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.85, opacity: 0, y: 24 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setShowPopup(false)}
+                className="absolute top-3 right-3 p-1.5 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* Icon */}
+              <div className="w-14 h-14 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🚫</span>
+              </div>
+
+              {/* Text */}
+              <h2 className="text-white font-bold text-xl mb-2">
+                1st Year Registrations Closed
+              </h2>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                1st year students are not eligible to register for UDBHAV 2K26. Only 2nd, 3rd and 4th year students can participate.
+              </p>
+
+              {/* Auto-dismiss bar */}
+              <div className="mt-5 w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full bg-red-500 rounded-full"
+                  initial={{ width: '100%' }}
+                  animate={{ width: '0%' }}
+                  transition={{ duration: 5, ease: 'linear' }}
+                />
+              </div>
+              <p className="text-gray-600 text-xs mt-2">Closes automatically</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="fixed top-0 left-0 w-full h-full -z-10 animated-gradient-bg">
         <canvas
           ref={canvasRef}

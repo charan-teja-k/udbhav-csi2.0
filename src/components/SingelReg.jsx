@@ -257,7 +257,6 @@ export default function SingleRegistration({setform, onsubmit}) {
                       onChange={(e) => updateField('year', e.target.value)}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#203a43] focus:outline-none transition-all duration-300 bg-gray-50 hover:bg-white cursor-pointer"
                     >
-                      <option value="1st Year">1st Year</option>
                       <option value="2nd Year">2nd Year</option>
                       <option value="3rd Year">3rd Year</option>
                       <option value="4th Year">4th Year</option>
