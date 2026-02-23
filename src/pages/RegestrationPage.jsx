@@ -12,7 +12,7 @@ export default function RegistrationPage() {
   const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowPopup(false), 5000);
+    const timer = setTimeout(() => setShowPopup(false), 10000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -223,7 +223,7 @@ export default function RegistrationPage() {
                 1st Year Registrations Closed
               </h2>
               <p className="text-gray-400 text-sm leading-relaxed">
-                1st year students are not eligible to register for UDBHAV 2K26. Only 2nd, 3rd and 4th year students can participate.
+                Registartion are Colsed For <span className="text-red-400">1st year students & SRKR </span> <span className='text-yellow-400'>In Case Registered Money Will Not Refund and No Team Allowed</span>
               </p>
 
               {/* Auto-dismiss bar */}

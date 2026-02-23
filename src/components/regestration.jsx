@@ -14,7 +14,7 @@ export default function Registration({setform, onsubmit}) {
   const [formData, setFormData] = useState({
     teamcode: null,
     teamName: '',
-    collegeType: 'srkr',
+    collegeType: '',
     otherCollege: '',
     teamLead: {
       name: '',
@@ -345,18 +345,22 @@ export default function Registration({setform, onsubmit}) {
                         <input
                           type="radio"
                           name="college"
-                          value="srkr"
-                          checked={formData.collegeType === 'srkr'}
-                          onChange={(e) => setFormData({ ...formData, collegeType: e.target.value })}
+                          // value="srkr"
+                          disabled= "true"
+                          // checked={formData.collegeType === 'srkr'}
+                          cursor='not-allowed' 
+                          
+                          // onChange={(e) => setFormData({ ...formData, collegeType: e.target.value })}
                           className="w-4 h-4 accent-[#0f2027]"
                         />
-                        <span className="text-gray-700 group-hover:text-[#0f2027] transition-colors">SRKR College</span>
+                        <span className="text-gray-700 group-hover:text-[#0f2027] transition-colors"><del>SRKR College</del></span>
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer group">
                         <input
                           type="radio"
                           name="college"
                           value="others"
+                          pattern='[s-rS-R]{4}'
                           checked={formData.collegeType === 'others'}
                           onChange={(e) => setFormData({ ...formData, collegeType: e.target.value })}
                           className="w-4 h-4 accent-[#0f2027]"
