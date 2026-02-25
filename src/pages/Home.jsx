@@ -239,6 +239,17 @@ export default function Home() {
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </span>
               </Button>
+              <br></br>
+              <Button
+                size="lg"
+                className="mt-7 text-lg px-4 py-3 btn-yellow-blink rounded-full"
+                onClick={() => navigate('/ppt-submission')}
+              >
+                <span className="relative z-10 flex items-center">
+                  Submit PPT
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </span>
+              </Button>
             
 
             {/* Stats */}
