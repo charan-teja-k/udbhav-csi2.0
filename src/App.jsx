@@ -4,6 +4,8 @@ import React, { useCallback, useState } from 'react'
 import ProblemStatement from './pages/ProblemStatement';
 import IdeaSubmission from "./pages/IdeaSubmission";
 import PptSubmission from "./pages/PptSubmission";
+import CheckTasks from "./pages/CheckTasks";
+import TechComments from "./pages/TechComments";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Paymentpage from './pages/paymentpage';
 import AdminPage from './pages/AdminPage';
@@ -33,6 +35,8 @@ export default function App() {
       <Route element={<Paymentpage/>}  path='/payment'/>
       <Route element={<AdminPage />} path="/admin" />
       <Route element={<SubmessionsPage/>} path="/admin/SubmessionsPage"/>
+      <Route element={<CheckTasks/>} path="/tasks"/>
+      <Route element={<TechComments/>} path="/techcomments"/>
     </Routes>
     </BrowserRouter>
   )
