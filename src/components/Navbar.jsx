@@ -85,7 +85,7 @@ const Navbar = () => {
                                     {link.label}
                                 </a>
                             ))}
-                            <Button size="sm" className="font-display btn-yellow-blink px-6 py-2 rounded-full"
+                            {/* <Button size="sm" className="font-display btn-yellow-blink px-6 py-2 rounded-full"
                             onClick={downloadPPT}>
                                 PPT TEMPLATE
                             </Button>
@@ -96,10 +96,34 @@ const Navbar = () => {
                                 onClick={() => navigate('/ppt-submission')}
                             >
                                 <span className="relative z-10">Submit PPT →</span>
+                            </Button> */}
+                            {/* <Button size="sm" className="font-display btn-yellow-blink px-6 py-2 rounded-full"
+                            onClick={downloadPPT}>
+                                PPT TEMPLATE
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                className="font-display btn-yellow-blink px-6 py-2 rounded-full"
+                                onClick={() => navigate('/ppt-submission')}
+                            >
+                                <span className="relative z-10">Submit PPT →</span>
+                            </Button> */}
+                            {/* <Button size="sm" className="font-display btn-yellow-blink px-6 py-2 rounded-full"
+                            onClick={downloadPPT}>
+                                PPT TEMPLATE
+                            </Button> */}
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                className="font-display btn-yellow-blink px-6 py-2 rounded-full"
+                                onClick={() => navigate('/tasks')}
+                            >
+                                <span className="relative z-10">Check tasks →</span>
                             </Button>
                             
                             
-                            <Button
+                            {/* <Button
                                 size="sm"
                                 variant="outline"
                                 className="font-display relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/20 via-emerald-400/30 to-cyan-500/20 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
@@ -111,7 +135,7 @@ const Navbar = () => {
                             <Button size="sm" className="font-display relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
                             onClick={handleRegistration}>
                                 Register
-                            </Button>
+                            </Button> */}
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -162,7 +186,7 @@ const Navbar = () => {
                                     </a>
                                 ))}
                                 
-                                <Button
+                                {/* <Button
                                     className="font-display mt-2 relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/30 via-emerald-400/40 to-cyan-500/30 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
                                     onClick={() => {
                                         setIsMobileMenuOpen(false);
@@ -170,8 +194,8 @@ const Navbar = () => {
                                     }}
                                 >
                                     Register Now
-                                </Button>
-                                <Button
+                                </Button> */}
+                                {/* <Button
                                     className="font-display mt-2 btn-yellow-blink px-6 py-2 rounded-full"
                                     onClick={() => {
                                         setIsMobileMenuOpen(false);
@@ -179,8 +203,8 @@ const Navbar = () => {
                                     }}
                                 >
                                     PPT TEMPLATE
-                                </Button>
-                                <Button
+                                </Button> */}
+                                {/* <Button
                                     variant="outline"
                                     className="font-display mt-2 relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/20 via-emerald-400/30 to-cyan-500/20 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
                                     onClick={() => {
@@ -189,8 +213,18 @@ const Navbar = () => {
                                     }}
                                 >
                                     <span className="relative z-10">Submit Idea →</span>
-                                </Button>
+                                </Button> */}
                                 <Button
+                                    variant="outline"
+                                    className="font-display mt-2 relative overflow-hidden border-0 px-6 py-2 rounded-full text-teal-200 bg-gradient-to-r from-teal-500/20 via-emerald-400/30 to-cyan-500/20 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:text-white"
+                                    onClick={() => {
+                                        setIsMobileMenuOpen(false);
+                                        navigate('/tasks');
+                                    }}
+                                >
+                                    <span className="relative z-10">Check tasks →</span>
+                                </Button>
+                                {/* <Button
                                     variant="outline"
                                     className="font-display btn-yellow-blink px-6 py-2 rounded-full"
                                     onClick={() => {
@@ -199,7 +233,7 @@ const Navbar = () => {
                                     }}
                                 >
                                     <span className="relative z-10">Submit PPT →</span>
-                                </Button>
+                                </Button> */}
                             </div>
                         </motion.div>
                     </motion.div>

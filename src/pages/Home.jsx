@@ -214,7 +214,7 @@ export default function Home() {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div
+            {/* <motion.div
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -228,8 +228,8 @@ export default function Home() {
                 Register Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-            </motion.div>
-            <Button
+            </motion.div> */}
+            {/* <Button
                 size="lg"
                 className="mt-7 text-lg px-4 py-3 btn-yellow-blink rounded-full"
                 onClick={() => navigate('/idea-submission')}
@@ -238,15 +238,25 @@ export default function Home() {
                   Submit Idea
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </span>
-              </Button>
+              </Button> */}
               <br></br>
-              <Button
+              {/* <Button
                 size="lg"
                 className="mt-7 text-lg px-4 py-3 btn-yellow-blink rounded-full"
                 onClick={() => navigate('/ppt-submission')}
               >
                 <span className="relative z-10 flex items-center">
                   Submit PPT
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </span>
+              </Button> */}
+              <Button
+                size="lg"
+                className="mt-7 text-lg px-4 py-3 btn-yellow-blink rounded-full"
+                onClick={() => navigate('/tasks')}
+              >
+                <span className="relative z-10 flex items-center">
+                  Check tasks
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </span>
               </Button>
